@@ -1,61 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📦 SITTA — Sistem Informasi Tracking & Transaksi Akademik
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+SITTA adalah aplikasi berbasis **Laravel 11** dengan integrasi **Vite**, **TailwindCSS**, dan **Flowbite** untuk menampilkan data bahan ajar, tracking pengiriman, serta pengelolaan data lokal menggunakan `store.js` dan `data.js`.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+✅ **Autentikasi Lokal**
+- Sistem login/logout berbasis `localStorage`
+- Middleware Laravel untuk proteksi halaman
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+✅ **Manajemen Bahan Ajar**
+- Tabel interaktif (Flowbite Table)
+- Fitur pencarian, detail, edit, hapus (semua berbasis JS)
+- Data tersimpan di `localStorage` (offline-ready)
 
-## Learning Laravel
+✅ **Tracking Pengiriman**
+- Form pelacakan berdasarkan Nomor DO
+- Menampilkan detail dan riwayat perjalanan pengiriman
+- Tampilan elegan dengan card dan timeline
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+✅ **Integrasi Frontend Modern**
+- Menggunakan **Vite** untuk bundling aset
+- Styling dengan **TailwindCSS + Flowbite**
+- Komponen UI responsif dan ringan
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🧰 Persyaratan Sistem
 
-## Laravel Sponsors
+Pastikan kamu sudah menginstal:
+- PHP >= 8.2
+- Composer
+- Node.js >= 18
+- NPM atau Yarn
+- Database (opsional jika hanya uji localStorage)
+- Laragon / XAMPP (opsional)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## ⚙️ Langkah Instalasi
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1️⃣ Clone Repository
+```bash
+git clone https://github.com/username/sitta.git
+cd sitta
+```
 
-## Contributing
+### 2️⃣ Install Dependency Laravel
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3️⃣ Install Dependency Frontend
+```bash
+npm install
+```
 
-## Code of Conduct
+### 4️⃣ Konfigurasi Environment
+Salin file `.env.example` menjadi `.env`:
+```bash
+cp .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Lalu ubah konfigurasi sesuai kebutuhan:
+```env
+APP_NAME="SITTA"
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://praktik-web.test
+```
 
-## Security Vulnerabilities
+Generate app key:
+```bash
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 5️⃣ Jalankan Vite dan Server Laravel
+Buka dua terminal terpisah:
 
-## License
+**Terminal 1:**
+```bash
+npm run dev
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Terminal 2:**
+```bash
+php artisan serve
+```
+
+Atau jika menggunakan Laragon, cukup buka:
+```
+http://praktik-web.test
+```
+
+---
+
+## 🧩 Struktur Proyek
+
+```
+├── app/
+├── public/
+├── resources/
+│   ├── css/
+│   │   └── app.css
+│   ├── js/
+│   │   ├── app.js         # Entry utama Vite
+│   │   ├── data.js        # Data dummy bahan ajar & tracking
+│   │   └── store.js       # Fungsi CRUD localStorage & autentikasi
+│   ├── views/
+│   │   ├── layouts/
+│   │   │   └── main.blade.php
+│   │   ├── login.blade.php
+│   │   ├── bahan-ajar.blade.php
+│   │   └── tracking-pengiriman.blade.php
+├── routes/
+│   └── web.php
+├── package.json
+├── vite.config.js
+└── README.md
+```
+
+---
+
+## 🧠 Cara Kerja
+
+- Semua data awal (`dataBahanAjar`, `dataTracking`) dimuat dari `data.js`
+- Saat aplikasi pertama kali dijalankan, `store.js` akan **menginisialisasi localStorage**
+- Semua aksi CRUD (insert, update, delete) pada bahan ajar dilakukan di `store.js`
+- Autentikasi (login/logout) juga tersimpan di `localStorage`
+- Middleware Laravel tetap digunakan untuk membatasi akses route (`AuthCheck`)
+
+---
+
+## 💡 Catatan
+
+> Jika tampilan tabel tidak muncul atau gaya Flowbite tidak ter-load:
+> - Pastikan `import 'flowbite';` sudah ada di `resources/js/app.js`
+> - Jalankan ulang perintah `npm run dev`
+> - Bersihkan cache browser (`Ctrl + Shift + R`)
+
+---
+
+Selamat mencoba dan semoga bermanfaat! ✨
