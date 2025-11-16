@@ -107,28 +107,22 @@
                         <td class="p-3 border-r">{{ item.lokasiRak }}</td>
                         <td class="p-3 border-r">{{ item.qty }}</td>
                         <td class="p-3 border-r">{{ item.safety }}</td>
-
-                        <!-- Status -->
                         <td class="p-3 border-r font-semibold" :class="statusColor(item)">
                             {{ statusText(item) }}
                         </td>
-
                         <td class="p-3 border-r" v-html="item.catatanHTML"></td>
+                        <td class="p-3 flex gap-2">
+                            <button
+                                @click="editItem(item)"
+                                class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition">
+                                Edit
+                            </button>
 
-                        <td class="p-3">
-                            <td class="p-3 flex gap-2">
-                                <button
-                                    @click="editItem(item)"
-                                    class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition">
-                                    Edit
-                                </button>
-
-                                <button
-                                    @click="deleteItem(item.kode)"
-                                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">
-                                    Hapus
-                                </button>
-                            </td>
+                            <button
+                                @click="deleteItem(item.kode)"
+                                class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">
+                                Hapus
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -333,8 +327,19 @@
                 },
 
                 showFilter: false
-
             };
+        },
+
+        watch: {
+            "filter.upbjj"(newVal) {
+                if (!newVal) {
+                    this.filter.kategori = "";
+                }
+            },
+
+            "editForm.qty"(val) {
+                if (val < 0) this.editForm.qty = 0;
+            }
         },
 
         computed: {
@@ -415,7 +420,6 @@
                 }
 
                 this.showEditModal = false;
-
                 alert("Data berhasil diperbarui!");
             },
 
@@ -423,7 +427,6 @@
                 if (!confirm("Yakin ingin menghapus data ini?")) return;
 
                 this.Store.deleteBahanAjar(kode);
-
                 this.stok = this.stok.filter(item => item.kode !== kode);
             },
 
@@ -438,7 +441,6 @@
                 this.stok.push({ ...this.addForm });
 
                 this.showAddModal = false;
-
                 alert("Data berhasil ditambahkan!");
 
                 this.addForm = {
