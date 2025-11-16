@@ -1,9 +1,14 @@
-import { dataPengguna, dataBahanAjar, dataTracking } from "./data.js";
+import { dataPengguna, dataBahanAjar, dataTracking, upbjjList, kategoriList, pengirimanList, paketList, stokDetail } from "./data.js";
 
 const STORAGE_KEYS = {
     pengguna: "dataPengguna",
     bahanAjar: "dataBahanAjar",
     tracking: "dataTracking",
+    upbjjList: "dataUpbjjList",
+    kategoriList: "dataKategoriList",
+    pengirimanList: "dataPengirimanList",
+    paketList: "dataPaketList",
+    stokDetail: "dataStokDetail",
     session: "userSession",
 };
 
@@ -18,16 +23,33 @@ export function initStore() {
     if (!localStorage.getItem(STORAGE_KEYS.tracking)) {
         localStorage.setItem(STORAGE_KEYS.tracking, JSON.stringify(dataTracking));
     }
+    if (!localStorage.getItem(STORAGE_KEYS.upbjjList)) {
+        localStorage.setItem(STORAGE_KEYS.upbjjList, JSON.stringify(upbjjList));
+    }
+    if (!localStorage.getItem(STORAGE_KEYS.kategoriList)) {
+        localStorage.setItem(STORAGE_KEYS.kategoriList, JSON.stringify(kategoriList));
+    }
+    if (!localStorage.getItem(STORAGE_KEYS.pengirimanList)) {
+        localStorage.setItem(STORAGE_KEYS.pengirimanList, JSON.stringify(pengirimanList));
+    }
+    if (!localStorage.getItem(STORAGE_KEYS.paketList)) {
+        localStorage.setItem(STORAGE_KEYS.paketList, JSON.stringify(paketList));
+    }
+    if (!localStorage.getItem(STORAGE_KEYS.stokDetail)) {
+        localStorage.setItem(STORAGE_KEYS.stokDetail, JSON.stringify(stokDetail));
+    }
+
     console.log("Data berhasil diinisialisasi ke localStorage");
 }
 
-// Helper ambil semua data
+// ======================
+// HELPER
+// ======================
 function getAll(key) {
     const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : [];
 }
 
-// Helper simpan data
 function saveAll(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
@@ -113,7 +135,7 @@ export function insertBahanAjar(newItem) {
 
 export function updateBahanAjar(kodeBarang, fields) {
     const data = getAllBahanAjar();
-    const index = data.findIndex((d) => d.kodeBarang === kodeBarang);
+    const index = data.findIndex((d) => d.kode === kodeBarang);
     if (index === -1) return null;
     data[index] = { ...data[index], ...fields };
     saveAll(STORAGE_KEYS.bahanAjar, data);
@@ -121,7 +143,7 @@ export function updateBahanAjar(kodeBarang, fields) {
 }
 
 export function deleteBahanAjar(kodeBarang) {
-    const data = getAllBahanAjar().filter((d) => d.kodeBarang !== kodeBarang);
+    const data = getAllBahanAjar().filter((d) => d.kode !== kodeBarang);
     saveAll(STORAGE_KEYS.bahanAjar, data);
     return true;
 }
@@ -130,11 +152,11 @@ export function deleteBahanAjar(kodeBarang) {
 // DATA TRACKING
 // =======================
 export function getAllTracking() {
-    return getAll(STORAGE_KEYS.tracking);
+    return JSON.parse(localStorage.getItem(STORAGE_KEYS.tracking)) || {};
 }
 
 export function insertTracking(noDO, newItem) {
-    const data = getAllTracking();
+    const data = getAllTracking(); 
     data[noDO] = newItem;
     saveAll(STORAGE_KEYS.tracking, data);
     return newItem;
@@ -154,3 +176,51 @@ export function deleteTracking(noDO) {
     saveAll(STORAGE_KEYS.tracking, data);
     return true;
 }
+
+/* ===================================================
+   MASTER DATA
+=================================================== */
+
+// OLD: getPaketList() return this.paket → undefined
+// NEW:
+export function getPaketList() {
+    return getAll(STORAGE_KEYS.paketList);
+}
+
+export function getPengirimanList() {
+    return getAll(STORAGE_KEYS.pengirimanList);
+}
+
+export function getUpbjjList() {
+    return getAll(STORAGE_KEYS.upbjjList);
+}
+
+export function getKategoriList() {
+    return getAll(STORAGE_KEYS.kategoriList);
+}
+
+export function getStokDetail() {
+    return getAll(STORAGE_KEYS.stokDetail);
+}
+
+// ===========================
+// AUTO NUMBER DO
+// ===========================
+export function generateNextDO() {
+    const trackingData = getAllTracking();
+    const tahun = new Date().getFullYear();
+    const prefix = `DO${tahun}-`;
+
+    const listDO = Object.keys(trackingData).filter(k => k.startsWith(prefix));
+
+    if (listDO.length === 0) {
+        return `${prefix}001`;
+    }
+
+    const last = listDO[listDO.length - 1];
+    const seq = parseInt(last.split("-")[1]) + 1;
+
+    return `${prefix}${String(seq).padStart(3, "0")}`;
+}
+
+
