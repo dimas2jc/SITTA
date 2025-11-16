@@ -101,22 +101,43 @@ http://praktik-web.test
 
 ```
 ├── app/
+│
 ├── public/
+│
 ├── resources/
 │   ├── css/
 │   │   └── app.css
+│   │
 │   ├── js/
-│   │   ├── app.js         # Entry utama Vite
-│   │   ├── data.js        # Data dummy bahan ajar & tracking
-│   │   └── store.js       # Fungsi CRUD localStorage & autentikasi
+│   │   ├── app.js                # Entry utama Vite
+│   │   ├── bootstrap.js
+│   │   ├── data.js               # Data dummy: pengguna, bahan ajar, tracking
+│   │   ├── store.js              # Store untuk CRUD + localStorage
+│   │   ├── tracking.js           # Entry mount untuk halaman TrackingPage.vue
+│   │   └── stock.js              # Entry mount untuk halaman StockPage.vue
+│   │
 │   ├── views/
 │   │   ├── layouts/
-│   │   │   └── main.blade.php
-│   │   ├── login.blade.php
-│   │   ├── bahan-ajar.blade.php
-│   │   └── tracking-pengiriman.blade.php
+│   │   │   ├── main.blade.php    # Layout utama (navbar + sidebar + yield)
+│   │   │   ├── navbar.blade.php  # Komponen navbar
+│   │   │   └── sidebar.blade.php # Komponen sidebar
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── bahanAjar.blade.php          
+│   │   │   ├── dashboard.blade.php
+│   │   │   ├── stock_vue.blade.php          # Halaman untuk mount Vue stokPage
+│   │   │   ├── tracking_vue.blade.php       # Halaman untuk mount Vue trackingPage
+│   │   │   ├── tracking.blade.php           
+│   │   │
+│   │   └── pages/vue/
+│   │       ├── stockPage.vue                # Vue page: stok bahan ajar
+│   │       └── trackingPage.vue             # Vue page: tracking pengiriman
+│   │
+│   └── views/auth.blade.php
+│
 ├── routes/
-│   └── web.php
+│   └── web.php                              # Routing Laravel
+│
 ├── package.json
 ├── vite.config.js
 └── README.md
