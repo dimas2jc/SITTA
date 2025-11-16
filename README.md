@@ -114,8 +114,8 @@ http://praktik-web.test
 │   │   ├── data.js               # Data dummy: pengguna, bahan ajar, tracking
 │   │   ├── store.js              # Store untuk CRUD + localStorage
 │   │   └── vue              
-│   │       ├── tracking.js           # Entry mount untuk halaman TrackingPage.vue
-│   │       └── stock.js              # Entry mount untuk halaman StockPage.vue
+│   │       ├── tracking.js       # Entry mount untuk halaman TrackingPage.vue
+│   │       └── stock.js          # Entry mount untuk halaman StockPage.vue
 │   │
 │   ├── views/
 │   │   ├── layouts/
